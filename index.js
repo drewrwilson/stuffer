@@ -93,6 +93,35 @@ var sendSelectionFirstRow = function (query, params, res) {
   sendSelection(query, params, res, preProcess);
 };
 
+// connects to database
+// run select query on database
+// send result
+// before rows are sent, they're run through an optional preProcess function which by default
+// does nothing. See `sendSelectionFirstRow` for example of how this could be used.
+var sendSelection = function (query, params, res, preProcess) {
+
+  if (typeof preProcess === 'undefined') {
+    preProcess = function (rows) { return rows; };
+  }
+
+  var outputHandler = function (rows) {
+    res.send(preProcess(rows));
+  };
+
+  queryDB(query, params, res, outputHandler);
+};
+
+
+// instead of sending an array of results, return just the first one.
+// useful when you know there should only be one result.
+var sendSelectionFirstRow = function (query, params, res) {
+  var preProcess = function (rows) {
+    return rows[0];
+    // TODO: what to return if there is no rows[0]? (if rows.length < 1)
+  };
+  sendSelection(query, params, res, preProcess);
+};
+
 
 
 //Static routes:
@@ -127,7 +156,7 @@ server.get('/comments', function (req, res, next) {
 });
 
 server.post('/comments', function (req, res, next) {
-  var sql = 'INSERT INTO comments ("id", "docket", "email", "first_name", "last_name", "address1", "city", "state", "zip", "comment", "confirmation") VALUES (($1), ($2), ($3), ($4), ($5), ($6), ($7), ($8), ($9), ($10), ($11)) RETURNING id;';
+  var sql = 'INSERT INTO comments ("docket", "email", "first_name", "last_name", "address1", "city", "state", "zip", "comment", "confirmation") VALUES (($1), ($2), ($3), ($4), ($5), ($6), ($7), ($8), ($9), ($10), ($10)) RETURNING id;';
 
   var outputHandler = function (rows) {
     res.send(rows[0]);
@@ -142,8 +171,7 @@ server.post('/comments', function (req, res, next) {
 // /comments/:id
 server.get('/comments/:id', function (req, res, next) {
 
-  var selectUpdatesQuery = 'SELECT * FROM comments WHERE "id" = ($1)';
-  queryDB(selectUpdatesQuery, [req.params.id], res, sendStand);
+  sendSelectionFirstRow('SELECT * FROM comments WHERE "id" = ($1);', [req.params.id], res);
 
   return next();
 });
