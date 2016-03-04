@@ -156,13 +156,13 @@ server.get('/comments', function (req, res, next) {
 });
 
 server.post('/comments', function (req, res, next) {
-  var sql = 'INSERT INTO comments ("docket", "email", "first_name", "last_name", "address1", "city", "state", "zip", "comment", "confirmation") VALUES (($1), ($2), ($3), ($4), ($5), ($6), ($7), ($8), ($9), ($10), ($10)) RETURNING id;';
+  var sql = 'INSERT INTO comments ("docket", "email", "first_name", "last_name", "address1", "city", "state", "zip", "comment", "confirmation") VALUES (($1), ($2), ($3), ($4), ($5), ($6), ($7), ($8), ($9), ($10)) RETURNING id;';
 
   var outputHandler = function (rows) {
     res.send(rows[0]);
   }
 
-  queryDB(sql, [req.params.id, req.body.docket, req.body.email, req.body.first_name, req.body.last_name, req.body.address1, req.body.city, req.body.state, req.body.zip, req.body.comment, req.body.confirmation], res, outputHandler);
+  queryDB(sql, [req.body.docket, req.body.email, req.body.first_name, req.body.last_name, req.body.address1, req.body.city, req.body.state, req.body.zip, req.body.comment, req.body.confirmation], res, outputHandler);
 
   return next();
 
@@ -170,7 +170,6 @@ server.post('/comments', function (req, res, next) {
 
 // /comments/:id
 server.get('/comments/:id', function (req, res, next) {
-
   sendSelectionFirstRow('SELECT * FROM comments WHERE "id" = ($1);', [req.params.id], res);
 
   return next();
