@@ -1,0 +1,13 @@
+CREATE TABLE comments (
+  id BIGSERIAL PRIMARY KEY,
+  docket VARCHAR(128) NOT NULL,
+  email VARCHAR(128) NOT NULL,
+  first_name VARCHAR(128) NOT NULL,
+  last_name VARCHAR(128) NOT NULL,
+  address1 VARCHAR(128) NOT NULL,
+  city VARCHAR(128) NOT NULL,
+  state VARCHAR(128) NOT NULL,
+  zip VARCHAR(128) NOT NULL,
+  comment VARCHAR(4096) NOT NULL,
+  confirmation VARCHAR(128)
+);
