@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FCC Stuffer</title>
+    <link rel="stylesheet" href="./assets/css/pure-min.css">
+    <link rel="stylesheet" href="./assets/css/grids-responsive-min.css">
+    <link rel="stylesheet" href="./assets/css/dropzone.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <div class="pure-g container">
+        <div class="pure-u-1">
+            <h1>CSV To FCC</h1>
+
+            <div class="input">
+                <input type="file" id="csvinput">
+                <button id="csvupload" class="pure-button">Upload</button>
+            </div>
+
+            <div class="send">
+                <button id="send" class="pure-button">Send Requests</button>
+                <div id="progress_bar"></div>
+            </div>
+
+            <h2>Preview of first ten rows</h2>
+            <table class="pure-table csvpreview">
+                <thead>
+                    <tr id="headers">
+                    </tr>
+                </thead>
+                <tbody id="values">
+                    
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>  
+    <script src="./assets/js/jq.js"></script>
+    <script src="./assets/js/nanobar.min.js"></script>
+    <script src="./assets/js/papaparse.js"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>

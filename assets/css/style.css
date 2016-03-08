@@ -1,0 +1,22 @@
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 60em;
+}
+
+.csvpreview {
+    margin-bottom: 3em;
+}
+
+.input {
+    margin-bottom: 3em;
+}
+
+.send {
+    display: none;
+    margin-bottom: 1em;
+}
+
+#progress_bar {
+    margin: 0.5em;
+}
