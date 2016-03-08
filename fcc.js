@@ -1,23 +1,15 @@
-var exports = module.exports = {};
+var casper = require('casper').create({
+    verbose: false,
+    logLevel: 'error'
+});
 
-var docket = '16-41';
-var userData = {
-    'name' : 'Joe Person',
-    'email' : 'joe.person@gmail.com',
-    'address.line1' : '1499 Massachusetts Ave NW',
-    'address.line2' : 'APT 1010',
-    'address.city' : 'Washington',
-    'address.state' : 'DC',
-    'address.zip' : '20005',
-    'address.plusFour' : '',
-    'comment' : 'I enjoy watching diverse video content, and hope there is more available in the future.'
-};
+console.log(casper.cli.options.name);
 
+casper.exit(); 
 
 var postFCCProceedingComment = function(docket, userData) {
 
     return new Promise(function(resolve, reject) {
-        var casper = require('casper').create();
         var fccURL = 'http://apps.fcc.gov/ecfs/upload/begin?procName=' + docket + '&filedFrom=X';
 
         casper.start(fccURL, function() {
@@ -65,12 +57,6 @@ function stateToID(state) {
         var states = ["AK", "AL", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NH", "NJ", "NM", "NV", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY", "AS", "FM", "MH", "MP", "PW"];
     return states.indexOf(state.toUpperCase()) + 1;
 }
-
-
-exports.postFCCProceedingComment = postFCCProceedingComment;
-exports.docket = docket;
-exports.userData;
-
 
 /* css selector for confirm link #uploadReviewActions > li:nth-child(2) > a:nth-child(1) */
 

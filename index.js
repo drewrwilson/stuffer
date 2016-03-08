@@ -155,14 +155,60 @@ server.get('/comments', function (req, res, next) {
   return next();
 });
 
-server.post('/comments', function (req, res, next) {
-  var sql = 'INSERT INTO comments ("docket", "email", "first_name", "last_name", "address1", "city", "state", "zip", "comment", "confirmation") VALUES (($1), ($2), ($3), ($4), ($5), ($6), ($7), ($8), ($9), ($10)) RETURNING id;';
+server.get('/commentstest', function (req, res, next) {
+  /*var sql = 'INSERT INTO comments ("docket", "email", "first_name", "last_name", "address1", "city", "state", "zip", "comment", "confirmation") VALUES (($1), ($2), ($3), ($4), ($5), ($6), ($7), ($8), ($9), ($10)) RETURNING id;';
 
   var outputHandler = function (rows) {
     res.send(rows[0]);
   }
 
-  queryDB(sql, [req.body.docket, req.body.email, req.body.first_name, req.body.last_name, req.body.address1, req.body.city, req.body.state, req.body.zip, req.body.comment, req.body.confirmation], res, outputHandler);
+  queryDB(sql, [req.body.docket, req.body.email, req.body.first_name, req.body.last_name, req.body.address1, req.body.city, req.body.state, req.body.zip, req.body.comment, req.body.confirmation], res, outputHandler);*/
+
+var docket = '16-41';
+var userData = {
+    'name' : 'Joe Person',
+    'email' : 'joe.person@gmail.com',
+    'address.line1' : '1499 Massachusetts Ave NW',
+    'address.line2' : 'APT 1010',
+    'address.city' : 'Washington',
+    'address.state' : 'DC',
+    'address.zip' : '20005',
+    'address.plusFour' : '',
+    'comment' : 'I enjoy watching diverse video content, and hope there is more available in the future.'
+};
+
+  (new Promise(function(resolve, reject) {
+      var child = 
+          require('child_process').execFile('casperjs',
+              ['./fcc.js',
+               '--name="'+userData.name+'"'
+                ], function (err, stdout, stderr) {
+          if (!err)
+              resolve(stdout);
+          else 
+              reject(stdout);
+      });
+  })).then(function(confirmationData) {
+      res.send({
+          success : true,
+          debug: confirmationData,
+          data : {
+              confirmation: confirmationData.confirmation,
+              docket: confirmationData.docket,
+              userData: confirmationData.userData
+          }
+      });
+  }).catch(function(errorData) {
+      res.send({
+          success: false,
+          data: {
+              docket: errorData.docket,
+              userData: errorData.userData
+          }
+      });
+  });
+
+
 
   return next();
 
