@@ -181,13 +181,23 @@ var userData = {
       var child = 
           require('child_process').execFile('casperjs',
               ['./fcc.js',
-               '--name="'+userData.name+'"'
-                ], function (err, stdout, stderr) {
-          if (!err)
-              resolve(stdout);
-          else 
-              reject(stdout);
-      });
+              '--docket="'+docket+'"',
+              '--name="'+userData['name']+'"',
+              '--email="'+userData['email']+'"',
+              '--address.line1="'+userData['address.line1']+'"',
+              '--address.line2="'+userData['address.line2']+'"',
+              '--address.city="'+userData['address.city']+'"',
+              '--address.state="'+userData['address.state']+'"',
+              '--address.zip="'+userData['address.zip']+'"',
+              '--address.plusFour="'+userData['address.plusFour']+'"',
+              '--comment="'+userData['comment']+'"'
+             ], function (err, stdout, stderr) {
+                 console.log(err, stdout, stderr);
+                  if (!err)
+                      resolve(stdout);
+                  else 
+                      reject(stdout);
+              });
   })).then(function(confirmationData) {
       res.send({
           success : true,
