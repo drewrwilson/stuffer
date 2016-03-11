@@ -1,0 +1,28 @@
+{
+  "name": "Stuffer",
+  "version": "0.0.1",
+  "description": "A native app for bulk sending comments to FCC. To be used by advocacy organizations",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron electron-main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drewrwilson/stuffer.git"
+  },
+  "keywords": [
+    "activism",
+    "social impact",
+    "government",
+    "social change"
+  ],
+  "author": "Drew Wilson",
+  "license": "Not sure yet",
+  "bugs": {
+    "url": "https://github.com/drewrwilson/stuffer/issues"
+  },
+  "homepage": "https://github.com/drewrwilson/stuffer#readme",
+  "devDependencies": {
+    "electron-prebuilt": "^0.36.0"
+  }
+}
