@@ -2,4 +2,4 @@ example_data/*
 node_modules/*
 npm-debug.log
 .env
-output.png
+output*.png
