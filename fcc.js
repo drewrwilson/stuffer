@@ -1,3 +1,38 @@
+/*
+**************************************************************
+*** This posts a public comment on a particular FCC docket ***
+**************************************************************
+*
+**************************************
+*** The parameters this takes are: ***
+**************************************
+*
+*   address.line1     - required - street number and street name
+*   address.line2     - optional - apartment number or other additional details
+*   address.city      - required - name of city
+*   address.state     - required - state, in the format of two letter abbreviation, eg 'MA' or 'CA'. Note: for the purposes of this script, 'DC' is considered a state
+*   address.zip       - required - 5 digit zip code
+*   address.plusFour  - optional - optional addition zip-code digits
+*   comment           - required - text of comment. minimum of 5 words, maximum unknown
+*
+*
+***********************
+*** Example:        ***
+***********************
+*
+* $:> casperjs fcc.js --name='Abbie Hoffman' --email='abbiehoffman.example@example.com' --address.line1='100 Example Street' --address.line2='' --address.city='Worcester' --address.state='MA' --address.zip='01609' --address.plusFour='' --comment='Example comment'
+*
+*
+***********************
+*** Important Note: ***
+***********************
+*
+* This is NodeJS code
+* This is CasperJS code
+* This runs QTWEBKIT, not V8
+*
+*/
+
 var casper = require('casper').create();
 var utils = require('utils');
 
