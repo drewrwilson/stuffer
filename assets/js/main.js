@@ -28,21 +28,21 @@ $(document).ready(function() {
                 console.log("Parse Complete", results);
                 userData = results;
                 renderPreview(results);
-                $('.send').show();
+                $('#send-block').show();
             }
         });
     }
 
     function renderPreview(results) {
         var table = $('.csvpreview');
-        
+
         results.meta.fields.forEach(function (header) {
             console.log(header);
             $('#headers').append('<td>' + header + '</td>');
         });
 
         results.data.slice(0, 10).forEach(function (row) {
-            
+
             function rowString(values) {
                 var s = '<tr>';
                 Object.keys(values).forEach(function (k) {
@@ -74,7 +74,7 @@ $(document).ready(function() {
         var requests = [];
         userData.data.forEach(function (req) {
             requests.push(post(req));
-        }); 
+        });
         Promise.all(requests).then(function () {
             $('<h2>Completed</h2>').hide().appendTo('.send').fadeIn();
         });
@@ -89,7 +89,7 @@ $(document).ready(function() {
             }, Math.random() * 5000);
         });
     }
-    
+
     var completedRequests = 0;
     function tickProgress() {
         completedRequests++;

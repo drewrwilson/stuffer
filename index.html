@@ -11,16 +11,21 @@
 <body>
     <div class="pure-g container">
         <div class="pure-u-1">
-            <h1>CSV To FCC</h1>
+            <h1 style="text-align:center">CSV To FCC</h1>
 
             <div class="input">
                 <input type="file" id="csvinput">
                 <button id="csvupload" class="pure-button">Upload</button>
             </div>
 
-            <div class="send">
-                <button id="send" class="pure-button">Send Requests</button>
-                <div id="progress_bar"></div>
+            <div id="send-block">
+              <label for="docket">Docket number:</label>
+                <input type="docket" name="docket" id="docket" placeholder="10-15">
+
+                <div>
+                    <button id="send" class="pure-button">Send Requests</button>
+                    <div id="progress_bar"></div>
+                </div>
             </div>
 
             <h2>Preview of first ten rows</h2>
@@ -30,13 +35,13 @@
                     </tr>
                 </thead>
                 <tbody id="values">
-                    
+
                 </tbody>
             </table>
 
 
         </div>
-    </div>  
+    </div>
     <script src="./assets/js/jq.js"></script>
     <script src="./assets/js/nanobar.min.js"></script>
     <script src="./assets/js/papaparse.js"></script>
