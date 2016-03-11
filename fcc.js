@@ -74,11 +74,3 @@ function stateToID(state) {
     var states = ["AK", "AL", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NH", "NJ", "NM", "NV", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY", "AS", "FM", "MH", "MP", "PW"];
     return states.indexOf(state.toUpperCase()) + 1;
 }
-
-/* css selector for confirm link #uploadReviewActions > li:nth-child(2) > a:nth-child(1) */
-
-/* confirmation text after hitting the confirm link: ECFS Filing Receipt - Confirmation number: 201638708720 */
-
-/* css selector for confirmation number .fieldset > h2:nth-child(1) */
-
-/* comment confirmation filing link: http://apps.fcc.gov/ecfs/comment/confirm?confirmation=201638708720 */
