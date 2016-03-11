@@ -38,16 +38,19 @@ $(document).ready(function() {
 
         results.meta.fields.forEach(function (header) {
             console.log(header);
-            $('#headers').append('<td>' + header + '</td>');
+            $('#headers').append('<th>' + header + '</th>'); //add a header for each column
         });
+        $('#headers').append('<th>confirmation</th>'); //add one more for confirmation codes
 
         results.data.slice(0, 10).forEach(function (row) {
 
             function rowString(values) {
                 var s = '<tr>';
+                //add a column for each column in the csv
                 Object.keys(values).forEach(function (k) {
                     s += '<td>' + values[k] + '</td>';
                 });
+                s += '<td></td>'; //add one more column for confirmation code
                 return s + '</tr>';
             };
             $('#values').append(rowString(row));
