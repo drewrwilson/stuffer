@@ -7,6 +7,7 @@
 *** The parameters this takes are: ***
 **************************************
 *
+*   docket            - required - docket number, a string of the docket eg '16-41'
 *   address.line1     - required - street number and street name
 *   address.line2     - optional - apartment number or other additional details
 *   address.city      - required - name of city
