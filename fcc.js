@@ -21,7 +21,7 @@
 *** Example:        ***
 ***********************
 *
-* $:> casperjs fcc.js --docket='16-41' --name='Abbie Hoffman' --email='abbiehoffman.example@example.com' --address.line1='100 Example Street' --address.line2='' --address.city='Worcester' --address.state='CT' --address.zip='01609' --address.plusFour='' --comment='Example comment Example comment Example comment Example comment'
+* $:> casperjs fcc.js --docket='16-41' --name='Abbie Hoffman' --email='abbiehoffman.example@example.com' --address.line1='100 Example Street' --address.line2='' --address.city='Worcester' --address.state='MA' --address.zip="01609" --address.plusFour='' --comment='Example comment Example comment Example comment Example comment'
 *
 *
 ***********************
@@ -50,20 +50,18 @@ var commentData = {
     'address.line2' : casper.cli.options['address.line2'],
     'address.city' : casper.cli.options['address.city'],
     'address.state' : stateToID(casper.cli.options['address.state']),
-    'address.zip' : String(casper.cli.options['address.zip']),
-    'address.plusFour' : casper.cli.options['address.plusFour'],
+    'address.zip' : casper.cli.raw.get('address.zip'),
+    'address.plusFour' : casper.cli.raw.get('address.plusFour'),
     'comment' : casper.cli.options['comment']
 };
 
 var inputDocket = casper.cli.options['docket'];
 
-utils.dump(postFCCProceedingComment(inputDocket, commentData));
-
 function postFCCProceedingComment(docket, comment) {
     var fccURL = 'http://apps.fcc.gov/ecfs/upload/begin?procName=' + docket + '&filedFrom=X';
 
     casper.start(fccURL, function() {
-        casper.echo('started');
+        // casper.echo('started');
     });
 
     casper.thenEvaluate(function(stateID){
@@ -79,38 +77,42 @@ function postFCCProceedingComment(docket, comment) {
         'address.line1': comment['address.line1'],
         'address.line2': comment['address.line2'],
         'address.city': comment['address.city'],
-        'address.zip': String(comment['address.zip']),
+        'address.zip': comment['address.zip'],
         'address.plusFour': comment['address.plusFour'],
         'briefComment': comment['comment']
       }, true);
-      casper.echo('submitted form');
+      // casper.echo('submitted form');
       this.capture('output-form-submit.png');
     });
 
     casper.then(function() {
       this.capture('output-confirm-page.png');
-      // this.click('#uploadReviewActions > li:nth-child(2) > a:nth-child(1)');
+      this.click('#uploadReviewActions > li:nth-child(2) > a:nth-child(1)');
       // casper.echo('clicking confirm');
+      this.capture('output-clicking-confirm.png');
     });
-    // casper.then(function(){
-    //     casper.echo('getting confirmation number');
-    //   var confirmationText = this.fetchText('.fieldset > h2:nth-child(1)');
-    //   casper.echo(confirmationText);
-    //   var confirmationNumber = confirmationText.match(/\d+/g); //returns array of matches, should only be one
-    //   if (confirmationNumber.length) {
-    //     return ({
-    //         docket: docket,
-    //         comment: comment,
-    //         confirmation: confirmationNumber[0]
-    //     });
-    //   } else { /* grabbing confirmation number failed, something went wrong! */
-    //       console.log("Failed to parse confirmation number for docket comment", docket, "by user", comment);
-    //       return ({
-    //           docket: docket,
-    //           comment: comment,
-    //           error: true
-    //       });
-    //   }
-    // });
+    casper.then(function(){
+      // casper.echo('getting confirmation number');
+      var confirmationText = this.fetchText('.fieldset > h2:nth-child(1)');
+      var confirmationNumber = confirmationText.match(/\d+/g); //returns array of matches, should only be one
+      if (confirmationNumber.length) {
+        this.capture('output-clicking-confirm.png');
+        casper.echo(confirmationNumber[0]); //output the confirmation number
+        return ({
+            docket: docket,
+            comment: comment,
+            confirmationCode: confirmationNumber[0]
+        });
+      } else { /* grabbing confirmation number failed, something went wrong! */
+          casper.echo('erorr'); //output error
+          return ({
+              docket: docket,
+              comment: comment,
+              error: true
+          });
+      }
+    });
     casper.run();
 }
+
+postFCCProceedingComment(inputDocket, commentData);
